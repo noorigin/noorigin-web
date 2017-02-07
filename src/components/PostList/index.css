@@ -1,0 +1,25 @@
+.list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  max-width: 122rem;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.postContainer {
+  width: 100%;
+  height: 58rem;
+  margin-bottom: 1rem;
+
+  @media (min-width: 40rem) {
+    width: calc(50% - 0.6rem);
+  }
+
+  @media (min-width: 60rem) {
+    width: calc(33.33% - 0.6rem);
+  }
+}

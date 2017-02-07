@@ -1,0 +1,43 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  align-items: stretch;
+}
+
+.contentContainer {
+  flex-grow: 1;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.footerContainer {
+  flex-grow: 0;
+  flex-shrink: 0;
+  z-index: 2;
+  padding-top: 1em;
+  position: relative;
+}
+
+.readMore {
+  transition: all 0.4s ease-out;
+  padding: 1em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(-100%);
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--colLink);
+  background-image:
+    linear-gradient(
+      to bottom,
+      color(var(--colContentBack) a(0)),
+      color(var(--colContentBack) a(1))
+    );
+
+  &:hover {
+    color: white;
+  }
+}

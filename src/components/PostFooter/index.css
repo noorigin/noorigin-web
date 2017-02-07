@@ -1,0 +1,19 @@
+.wrapper {
+  display: flex;
+}
+
+.shareLink {
+  transition: color 0.4s ease-out;
+  color: var(--colLink);
+  font-size: 1.4em;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:not(:last-child) {
+    margin-right: 0.3em;
+  }
+
+  &:hover {
+    color: white;
+  }
+}

@@ -1,0 +1,10 @@
+.wrapper {
+  width: 100%;
+  cursor: pointer;
+
+  & > img {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
