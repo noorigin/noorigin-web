@@ -1,8 +1,9 @@
 import React, { PureComponent, PropTypes } from 'react'
+// import { browserHistory } from 'react-router'
 import styles from './index.css'
 
-const DOCUMENT = typeof window !== 'undefined' && window.document
-const Lightbox = DOCUMENT ? require('react-image-lightbox') : null
+const WINDOW = typeof window !== 'undefined' && window
+const Lightbox = WINDOW ? require('react-image-lightbox') : null
 
 export default class GalleryEmbed extends PureComponent {
   constructor (props) {
@@ -10,8 +11,16 @@ export default class GalleryEmbed extends PureComponent {
     this.state = {
       isOpen: false,
       photoIndex: 0,
+      initialRoute: WINDOW ? window.location.search : '',
     }
   }
+
+  // componentDidUpdate () {
+  //   const { initialRoute } = this.state
+  //   console.log(initialRoute)
+  //   if (!this.state.initialRoute) return
+  //   browserHistory.push(`${initialRoute}/gallery`)
+  // }
 
   render () {
     const { images } = this.props

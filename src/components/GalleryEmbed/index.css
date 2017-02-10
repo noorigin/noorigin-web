@@ -8,3 +8,31 @@
     margin: 0 auto;
   }
 }
+
+:global(.ril-toolbar),
+:global(.ril-caption),
+:global(.ril-next-button),
+:global(.ril-prev-button) {
+  background-color: transparent;
+}
+
+:global(.ril-next-button),
+:global(.ril-prev-button) {
+  transform: scale(0.8);
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+:global(.ril-caption),
+:global(.ril-caption-content) {
+  width: 100%;
+  text-align: center;
+}
+
+:global(.ril-zoom-in),
+:global(.ril-zoom-out) {
+  display: none;
+}
