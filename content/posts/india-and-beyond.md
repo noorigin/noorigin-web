@@ -6,6 +6,9 @@ embed:
   india-2010:
     type: Gallery
     props:
+      mainImage:
+        src: /assets/ogimage.png
+        caption: Gallery
       images:
         - src: /assets/india-2010/1.jpg
           caption: The Liberty Hotel next to the infamous Chorr Bazaar, Bombay

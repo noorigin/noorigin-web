@@ -42,8 +42,8 @@ export default class GalleryEmbed extends PureComponent {
   }
 
   render () {
-    const { images } = this.props
-    const { src: src1, caption: caption1 } = images[0] || {}
+    const { mainImage, images } = this.props
+    const { src: src1, caption: caption1 } = mainImage || images[0] || {}
     const { isOpen, photoIndex } = this.state
 
     return (
@@ -77,15 +77,19 @@ export default class GalleryEmbed extends PureComponent {
   }
 }
 
+const imageProps = PropTypes.shape({
+  src: PropTypes.string,
+  caption: PropTypes.string,
+})
+
 GalleryEmbed.propTypes = {
   url: PropTypes.string,
-  images: PropTypes.arrayOf(PropTypes.shape({
-    src: PropTypes.string,
-    caption: PropTypes.string,
-  })),
+  mainImage: imageProps,
+  images: PropTypes.arrayOf(imageProps),
 }
 
 GalleryEmbed.defaultProps = {
   url: '',
+  mainImage: null,
   images: [],
 }
