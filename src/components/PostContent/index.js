@@ -25,9 +25,9 @@ export default function PostContent ({
                 </div>
               )
             case 'Video':
-              return <VideoEmbed {...props} key={index} />
+              return <VideoEmbed {...{ ...props, url: __url }} key={index} />
             case 'Gallery':
-              return <GalleryEmbed {...props} key={index} />
+              return <GalleryEmbed {...{ ...props, url: __url }} key={index} />
             default: return ''
           }
         })

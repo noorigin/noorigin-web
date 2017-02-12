@@ -1,5 +1,5 @@
 import React, { PureComponent, PropTypes } from 'react'
-// import { browserHistory } from 'react-router'
+import { browserHistory as history } from 'react-router'
 import styles from './index.css'
 
 const WINDOW = typeof window !== 'undefined' && window
@@ -8,19 +8,38 @@ const Lightbox = WINDOW ? require('react-image-lightbox') : null
 export default class GalleryEmbed extends PureComponent {
   constructor (props) {
     super(props)
+
+    const urlParts = props.url.split('/').filter(s => !!s)
+    const rootRoute = WINDOW ? WINDOW.location.pathname : ''
+    const openHash = `#gallery-${urlParts[urlParts.length - 1]}`
+
     this.state = {
-      isOpen: false,
+      openHash,
+      rootRoute,
       photoIndex: 0,
-      initialRoute: WINDOW ? window.location.search : '',
+      isOpen: WINDOW && WINDOW.location.hash === openHash,
     }
   }
 
-  // componentDidUpdate () {
-  //   const { initialRoute } = this.state
-  //   console.log(initialRoute)
-  //   if (!this.state.initialRoute) return
-  //   browserHistory.push(`${initialRoute}/gallery`)
-  // }
+  componentWillUpdate (_, nextState) {
+    if (!WINDOW) return
+
+    const { rootRoute, openHash, isOpen } = this.state
+    const { isOpen: nextIsOpen } = nextState
+
+    if (isOpen === nextIsOpen) return
+
+    if (nextIsOpen) {
+      history.push(`${rootRoute}${openHash}`)
+      this.unlisten = history.listen(() => {
+        if (WINDOW.location.hash !== openHash) this.setState({ isOpen: false })
+      })
+    } else {
+      history.replace(rootRoute)
+      this.unlisten && this.unlisten()
+      this.unlisten = null
+    }
+  }
 
   render () {
     const { images } = this.props
@@ -59,6 +78,7 @@ export default class GalleryEmbed extends PureComponent {
 }
 
 GalleryEmbed.propTypes = {
+  url: PropTypes.string,
   images: PropTypes.arrayOf(PropTypes.shape({
     src: PropTypes.string,
     caption: PropTypes.string,
@@ -66,5 +86,6 @@ GalleryEmbed.propTypes = {
 }
 
 GalleryEmbed.defaultProps = {
+  url: '',
   images: [],
 }
