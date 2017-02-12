@@ -1,9 +1,9 @@
 import React, { PureComponent, PropTypes } from 'react'
 import { browserHistory as history } from 'react-router'
-import styles from './index.css'
 
 const WINDOW = typeof window !== 'undefined' && window
 const Lightbox = WINDOW ? require('react-image-lightbox') : null
+const styles = require('./index.css')
 
 export default class GalleryEmbed extends PureComponent {
   constructor (props) {
