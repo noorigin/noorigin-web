@@ -6,6 +6,7 @@ const DefaultHeadMeta = props => (
     <Helmet
       meta={[
         { property: 'og:site_name', content: 'no origin' },
+        { property: 'og:image', content: '/assets/ogimage.png' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'theme-color', content: '#222' },
         ...props.meta ? props.meta : [],
