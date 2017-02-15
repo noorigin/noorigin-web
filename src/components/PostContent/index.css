@@ -11,6 +11,8 @@
 }
 
 .htmlContent {
+  text-align: justify;
+  
   & a {
     color: inherit;
     text-decoration: underline;
