@@ -1,17 +1,14 @@
 import React, { PropTypes } from 'react'
 import styles from './index.css'
 
-export default function VideoEmbed ({
-  from = 'youtube',
-  id = '',
-}) {
+export default function VideoEmbed ({ from, id, theme }) {
   const rootUrl = from === 'youtube' ? 'https://youtube.com/embed' : from
 
   return (
     <div className={styles.videoEmbed}>
       <iframe
         className={styles.videoFrame}
-        src={`${rootUrl}/${id}`}
+        src={`${rootUrl}/${id}?theme=${theme}`}
         allowFullScreen
       />
     </div>
@@ -21,4 +18,11 @@ export default function VideoEmbed ({
 VideoEmbed.propTypes = {
   from: PropTypes.string,
   id: PropTypes.string,
+  theme: PropTypes.oneOf([ 'light', 'dark' ]),
+}
+
+VideoEmbed.defaultProps = {
+  from: 'youtube',
+  id: '',
+  theme: 'light',
 }
