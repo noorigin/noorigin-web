@@ -9,7 +9,11 @@ export default function VideoEmbed ({
 
   return (
     <div className={styles.videoEmbed}>
-      <iframe className={styles.videoFrame} src={`${rootUrl}/${id}`} />
+      <iframe
+        className={styles.videoFrame}
+        src={`${rootUrl}/${id}`}
+        allowFullScreen
+      />
     </div>
   )
 }
