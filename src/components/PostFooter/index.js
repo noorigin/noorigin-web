@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react'
 import FaTwitter from 'react-icons/fa/twitter'
 import FaFacebook  from 'react-icons/fa/facebook'
-import FaTumblr  from 'react-icons/fa/tumblr'
+// import FaTumblr  from 'react-icons/fa/tumblr'
 import FaReddit from 'react-icons/fa/reddit-alien'
 import {
   buildTwitterShareUrl,
   buildFacebookShareUrl,
-  buildTumblrShareUrl,
+  // buildTumblrShareUrl,
   buildRedditShareUrl,
 } from '../../util'
 import styles from './index.css'
@@ -23,11 +23,13 @@ const PostFooter = ({ __url: url, title, description }) => (
       href={buildFacebookShareUrl({ url, title, description })}
       target='_blank'
     ><FaFacebook /></a>
+    {/*
     <a
       className={styles.shareLink}
       href={buildTumblrShareUrl({ url, title, description })}
       target='_blank'
     ><FaTumblr /></a>
+    */}
     <a
       className={styles.shareLink}
       href={buildRedditShareUrl({ url, title, description })}
