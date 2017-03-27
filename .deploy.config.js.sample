@@ -1,0 +1,7 @@
+module.exports = {
+  user: 'user',
+  password: 'password',
+  host: 'ftp.host',
+  port: 21,
+  remoteRoot: '/root_folder/',
+}
