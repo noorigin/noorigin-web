@@ -155,6 +155,7 @@
     "babel-preset-stage-1": "^6.13.0",
     "bluebird": "^3.5.0",
     "classnames": "^2.2.5",
+    "cli-spinner": "^0.2.6",
     "common-tags": "^1.4.0",
     "css-loader": "^0.26.1",
     "eslint": "^3.7.1",

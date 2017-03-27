@@ -1,11 +1,14 @@
 /* eslint-disable no-console */
 
+const Promise = require('bluebird')
 const path = require('path')
-const Bluebird = require('bluebird')
-const readdir = Bluebird.promisify(require('recursive-readdir'))
 const FTP = require('promise-ftp')
+const chalk = require('chalk')
+const { Spinner } = require('cli-spinner')
+const readdir = Promise.promisify(require('recursive-readdir'))
 const { map, zip } = require('lodash/fp')
 
+const log = console.log.bind(console)
 const localRoot = path.resolve(__dirname, '../dist')
 const {
   user,
@@ -15,33 +18,48 @@ const {
   remoteRoot,
 } = require(path.resolve(__dirname, '../.deploy.config'))
 
-const toLocalNames = map(name => path.relative(localRoot, name))
+const spinner = new Spinner('%s ')
+spinner.setSpinnerString(18)
 
-const uploadFile = async (client, local, remote) => {
-  const result = await client.put(local, remote)
-  console.log(`Uploaded ${remote}`)
-  return result
+const uploadFile = async (client, [local, remote]) => {
+  try {
+    await client.put(local, remote)
+    log(`${chalk.green('✔')} ${remote}`)
+  } catch (error) {
+    log(chalk.red(`✘ ${remote}`))
+    throw error
+  }
 }
 
 const deploy = async () => {
   const client = new FTP()
   const files = await readdir(localRoot)
-  const nameMap = zip(files, toLocalNames(files))
+  const names = zip(files, map(path.relative.bind(path, localRoot), files))
 
-  console.log(`Connecting to ${host}:${port} with ${user}:${password}`)
+  log('\n')
+  log(chalk.blue.bold(`Deploying to ${host}`))
+  log(`${chalk.dim('port')} ${port}`)
+  log(`${chalk.dim('root')} ${remoteRoot}`)
+  log(`${chalk.dim('user')} ${user}`)
+  log(`${chalk.dim('pass')} ${password.split('').map(() => '*').join('')}`)
+  log('\n')
+
+  spinner.start()
 
   try {
     await client.connect({ host, port, password, user })
     await client.cwd(remoteRoot)
+    await Promise.all(map(uploadFile.bind(null, client), names))
 
-    await Bluebird.all(map(args => uploadFile(client, ...args), nameMap))
-      .catch(error => { throw error })
-
+    spinner.stop(true)
     return client.end()
   } catch (error) {
+    spinner.stop(true)
     client.end()
     throw error
   }
 }
 
-deploy().then(() => console.log('Deployment complete'))
+deploy().then(() => {
+  log(chalk.bold.green('\n✔ Deployment complete\n'))
+})
