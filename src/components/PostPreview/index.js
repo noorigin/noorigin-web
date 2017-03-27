@@ -11,7 +11,7 @@ const PostPreview = props => {
   return (
     <BlackBox className={ styles.wrapper }>
       <div className={ styles.contentContainer }>
-        <PostContent {...props} />
+        <PostContent {...{ ...props, isFullPost: false }} />
       </div>
       <div className={ styles.footerContainer }>
         <Link to={ __url } className={ styles.readMore }>
