@@ -4,14 +4,17 @@ import styles from './index.css'
 
 const PostList = ({ posts }) => {
   return (
-    <div>
+    <div className="PostList">
       {
       posts.length
       ? (
-        <ul className={ styles.list }>
+        <ul className={`PostList__list ${styles.list}`}>
           {
           posts.map(post => (
-            <li className={styles.postContainer} key={ post.title }>
+            <li
+              className={`PostList__postContainer ${styles.postContainer}`}
+              key={ post.title }
+            >
               <PostPreview { ...post } />
             </li>
           ))

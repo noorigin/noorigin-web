@@ -6,7 +6,7 @@ import styles from './index.css'
 
 const PostFull = props => {
   return (
-    <BlackBox className={styles.wrapper}>
+    <BlackBox className={`PostFull ${styles.wrapper}`}>
       <PostContent {...{ ...props, isFullPost: true }} />
       <PostFooter {...props} />
     </BlackBox>
