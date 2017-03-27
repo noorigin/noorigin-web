@@ -1,5 +1,6 @@
 import React, { PureComponent, PropTypes } from 'react'
 import { browserHistory as history } from 'react-router'
+import CropImageEmbed from '../CropImageEmbed'
 
 const WINDOW = typeof window !== 'undefined' && window
 const Lightbox = WINDOW ? require('react-image-lightbox') : null
@@ -19,6 +20,8 @@ export default class GalleryEmbed extends PureComponent {
       photoIndex: 0,
       isOpen: WINDOW && WINDOW.location.hash === openHash,
     }
+
+    this.renderMainImage = this.renderMainImage.bind(this)
   }
 
   componentWillUpdate (_, nextState) {
@@ -41,9 +44,22 @@ export default class GalleryEmbed extends PureComponent {
     }
   }
 
+  renderMainImage () {
+    const { mainImage, images, isFullPost, cropMain } = this.props
+    const { src, caption } = mainImage || images[0] || {}
+
+    if (!cropMain) return <img src={src} alt={caption} />
+
+    return (
+      <CropImageEmbed
+        {...{ src, caption, ...cropMain }}
+        isFullPost={isFullPost}
+      />
+    )
+  }
+
   render () {
-    const { mainImage, images } = this.props
-    const { src: src1, caption: caption1 } = mainImage || images[0] || {}
+    const { images } = this.props
     const { isOpen, photoIndex } = this.state
 
     return (
@@ -52,7 +68,7 @@ export default class GalleryEmbed extends PureComponent {
           className={styles.wrapper}
           onClick={() => this.setState({ isOpen: true })}
         >
-          <img src={src1} alt={caption1} />
+          {this.renderMainImage()}
         </div>
         {isOpen && Lightbox
           ? (
@@ -77,19 +93,23 @@ export default class GalleryEmbed extends PureComponent {
   }
 }
 
-const imageProps = PropTypes.shape({
+const commonImageProps = {
   src: PropTypes.string,
   caption: PropTypes.string,
-})
+}
 
 GalleryEmbed.propTypes = {
   url: PropTypes.string,
-  mainImage: imageProps,
-  images: PropTypes.arrayOf(imageProps),
+  mainImage: PropTypes.shape(commonImageProps),
+  images: PropTypes.arrayOf(PropTypes.shape(commonImageProps)),
+  cropMain: PropTypes.shape(),
+  isFullPost: PropTypes.bool,
 }
 
 GalleryEmbed.defaultProps = {
   url: '',
   mainImage: null,
   images: [],
+  cropMain: null,
+  isFullPost: false,
 }

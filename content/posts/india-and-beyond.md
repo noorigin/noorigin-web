@@ -6,9 +6,8 @@ embed:
   india-2010:
     type: Gallery
     props:
-      mainImage:
-        src: /assets/ogimage.png
-        caption: Gallery
+      cropMain:
+        className: india-beyond-gallery-main
       images:
         - src: /assets/india-2010/1.jpg
           caption: The Liberty Hotel next to the infamous Chorr Bazaar, Bombay
@@ -16,9 +15,23 @@ embed:
           caption: Lady selling peacock feathers in Colaba, Bombay
         - src: /assets/india-2010/3.jpg
           caption: Ornamented alleyway in Pushkar, Rajasthan
+
+  india-2010-2:
+    type: Gallery
+    props:
+      mainImage:
+        src: /assets/ogimage.png
+        caption: Gallery
+      images:
+        - src: /assets/india-2010/1.jpg
+          caption: The Liberty Hotel next to the infamous Chorr Bazaar, Bombay
 ---
 
 This is going to be a full test post. With an introductory line or two, an image below which should link through to a gallery/tag page, and some more writing underneath the image reachable through a ‘MORE’ tag. At the very bottom there should be a twitter, tumblr and facebook like and reblog button. Let’s see how it goes.
+
+[embed india-2010-2]
+
+and
 
 [embed india-2010]
 
