@@ -9,11 +9,14 @@
     "lint:js": "eslint --ignore-path .gitignore --fix .",
     "lint:css": "stylelint \"src/**/*.css\"",
     "lint": "npm-run-all --parallel lint:*",
-    "start": "phenomic start",
+    "phenomic:start": "phenomic start",
+    "start": "npm-run-all yarn:install phenomic:start",
     "build": "phenomic build",
     "pretest": "npm run lint",
     "test": "npm run build",
-    "deploy": "yarn && npm run build && node scripts/noorigin.deploy.js"
+    "yarn:install": "yarn",
+    "deploy:web": "node scripts/noorigin.deploy.js",
+    "deploy": "npm-run-all yarn:install build deploy:web"
   },
   "phenomic": {
     "CNAME": true,

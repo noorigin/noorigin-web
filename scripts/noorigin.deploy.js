@@ -15,7 +15,7 @@ const {
   remoteRoot,
 } = require(path.resolve(__dirname, '../.deploy.config'))
 
-const toLocalNames = map(name => name.replace(`${localRoot}/`, ''))
+const toLocalNames = map(name => path.relative(localRoot, name))
 
 const uploadFile = async (client, local, remote) => {
   const result = await client.put(local, remote)
