@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { Link, BodyContainer } from 'phenomic'
 import VideoEmbed from '../VideoEmbed'
 import GalleryEmbed from '../GalleryEmbed'
+import CropImageEmbed from '../CropImageEmbed'
 import styles from './index.css'
 
 export default function PostContent ({
@@ -9,6 +10,7 @@ export default function PostContent ({
   title,
   bodyComponents,
   body,
+  isFullPost,
 }) {
   return (
     <article>
@@ -17,6 +19,8 @@ export default function PostContent ({
       </Link>
       { bodyComponents && bodyComponents.length
         ? bodyComponents.map(({ type, props }, index) => {
+          const embedProps = { ...props, isFullPost }
+
           switch (type) {
             case 'HTMLContent':
               return (
@@ -25,9 +29,11 @@ export default function PostContent ({
                 </div>
               )
             case 'Video':
-              return <VideoEmbed {...{ ...props, url: __url }} key={index} />
+              return <VideoEmbed {...{ ...embedProps, url: __url }} key={index} />
             case 'Gallery':
-              return <GalleryEmbed {...{ ...props, url: __url }} key={index} />
+              return <GalleryEmbed {...{ ...embedProps, url: __url }} key={index} />
+            case 'CropImage':
+              return <CropImageEmbed {...{ ...embedProps, url: __url }} key={index} />
             default: return ''
           }
         })
@@ -41,6 +47,7 @@ PostContent.propTypes = {
   __url: PropTypes.string,
   title: PropTypes.string,
   body: PropTypes.string,
+  isFullPost: PropTypes.bool,
   bodyComponents: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.string,
     props: PropTypes.object,
@@ -50,6 +57,7 @@ PostContent.propTypes = {
 PostContent.defaultProps = {
   __url: '',
   title: '',
+  isFullPost: false,
   bodyComponents: [],
   body: '',
 }

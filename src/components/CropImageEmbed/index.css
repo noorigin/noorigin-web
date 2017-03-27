@@ -1,0 +1,14 @@
+.imageEmbed {
+  display: block;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.backgroundImageEmbed {
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
