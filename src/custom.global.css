@@ -2,7 +2,7 @@
   & .sunshadow-main-poster {
     height: 44vh;
     background-size: cover;
-    background-position: center 98%;
+    background-position: center 99%;
     @media (min-width: 960px) and (min-height: 560px) {
       height: 50vh;
     }
@@ -12,6 +12,7 @@
     height: 44vh;
     background-size: cover;
     background-position: right center;
+    background-color: black;
     @media (min-width: 960px) and (min-height: 560px) {
       height: 50vh;
     }
