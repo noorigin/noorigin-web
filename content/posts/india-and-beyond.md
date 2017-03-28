@@ -21,7 +21,7 @@ embed:
 
 ---
 
-This is going to be a full test post. With an introductory line or two, an image below which should link through to a gallery/tag page, and some more writing underneath the image reachable through a ‘MORE’ tag. At the very bottom there should be a twitter, tumblr and facebook like and reblog button. Let’s see how it goes.
+This is going to be a full test post. With an introductory line or two, an image below which should link through to a gallery/tag page, and some more writing underneath the image reachable through a ‘MORE’ tag. At the very bottom there should be a twitter, tumblr and facebook like and reblog button. Let’s see how it goes. INDEED!
 
 [embed india-2010]
 
