@@ -4,9 +4,10 @@ const Promise = require('bluebird')
 const path = require('path')
 const FTP = require('promise-ftp')
 const chalk = require('chalk')
+const slash = require('slash')
 const { Spinner } = require('cli-spinner')
 const readdir = Promise.promisify(require('recursive-readdir'))
-const { map, zip } = require('lodash/fp')
+const { pipe, map, zip } = require('lodash/fp')
 
 const log = console.log.bind(console)
 const localRoot = path.resolve(__dirname, '../dist')
@@ -32,7 +33,9 @@ const deploy = async () => {
   const client = new FTP()
   const spinner = new Spinner('%s ')
   const files = await readdir(localRoot)
-  const names = zip(files, map(path.relative.bind(path, localRoot), files))
+  // Assumes server is a nix environment, normalises path to nix style
+  const localPath = pipe(path.relative.bind(path, localRoot), slash)
+  const names = zip(files, map(localPath, files))
   const end = () => {
     spinner.stop(true)
     client.end()

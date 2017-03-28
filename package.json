@@ -187,6 +187,7 @@
     "react-topbar-progress-indicator": "^1.0.0",
     "recursive-readdir": "^2.1.1",
     "redux": "^3.0.0",
+    "slash": "^1.0.0",
     "style-loader": "^0.13.0",
     "stylelint": "^7.2.0",
     "url-loader": "^0.5.7",
