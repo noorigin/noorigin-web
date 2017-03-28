@@ -18,9 +18,6 @@ const {
   remoteRoot,
 } = require(path.resolve(__dirname, '../.deploy.config'))
 
-const spinner = new Spinner('%s ')
-spinner.setSpinnerString(18)
-
 const uploadFile = async (client, [local, remote]) => {
   try {
     await client.put(local, remote)
@@ -33,8 +30,13 @@ const uploadFile = async (client, [local, remote]) => {
 
 const deploy = async () => {
   const client = new FTP()
+  const spinner = new Spinner('%s ')
   const files = await readdir(localRoot)
   const names = zip(files, map(path.relative.bind(path, localRoot), files))
+  const end = () => {
+    spinner.stop(true)
+    client.end()
+  }
 
   log('\n')
   log(chalk.blue.bold(`Deploying to ${host}`))
@@ -44,6 +46,7 @@ const deploy = async () => {
   log(`${chalk.dim('pass')} ${password.split('').map(() => '*').join('')}`)
   log('\n')
 
+  spinner.setSpinnerString(18)
   spinner.start()
 
   try {
@@ -51,11 +54,9 @@ const deploy = async () => {
     await client.cwd(remoteRoot)
     await Promise.all(map(uploadFile.bind(null, client), names))
 
-    spinner.stop(true)
-    return client.end()
+    return end()
   } catch (error) {
-    spinner.stop(true)
-    client.end()
+    end()
     throw error
   }
 }
