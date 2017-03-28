@@ -1,5 +1,5 @@
 export const mapKeys = fn => obj =>
-  Object.entries(obj).reduce((result, [key, val]) => {
-    result[fn(key)] = val
+  Object.keys(obj).reduce((result, key) => {
+    result[fn(key)] = obj[key]
     return result
   }, {})
