@@ -34,15 +34,7 @@
       },
       "development": {
         "presets": [
-          [
-            "babel-preset-env",
-            {
-              "useBuiltins": true,
-              "targets": {
-                "browsers": "last 2 versions, iOS >= 8"
-              }
-            }
-          ],
+          "babel-preset-env",
           "babel-preset-stage-2",
           "babel-preset-react"
         ],
@@ -73,11 +65,7 @@
           [
             "babel-preset-env",
             {
-              "modules": false,
-              "useBuiltins": true,
-              "targets": {
-                "browsers": "last 2 versions, iOS >= 8"
-              }
+              "modules": false
             }
           ],
           "babel-preset-stage-2",
@@ -95,12 +83,7 @@
           [
             "babel-preset-env",
             {
-              "modules": false,
-              "useBuiltins": true,
-              "targets": {
-                "browsers": "last 2 versions, iOS >= 8",
-                "uglify": true
-              }
+              "modules": false
             }
           ],
           "babel-preset-stage-2",
@@ -168,6 +151,7 @@
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.2.1",
     "babel-loader": "^6.4.1",
+    "babel-plugin-require-polyfill": "^1.0.0",
     "babel-plugin-transform-react-jsx-self": "^6.11.0",
     "babel-plugin-transform-react-jsx-source": "^6.9.0",
     "babel-polyfill": "^6.23.0",
