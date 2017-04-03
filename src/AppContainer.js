@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import './index.global.css'
 import './highlight.global.css'
 import React, { PropTypes } from 'react'
