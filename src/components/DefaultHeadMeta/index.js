@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 
 const polyfill = `https://cdn.polyfill.io/v2/polyfill.js?features=${
-  ['es6'].join(',')
+  ['default'].join(',')
 }`
 
 const DefaultHeadMeta = props => (
