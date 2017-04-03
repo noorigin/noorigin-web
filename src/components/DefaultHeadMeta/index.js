@@ -1,6 +1,10 @@
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 
+const polyfill = `https://cdn.polyfill.io/v2/polyfill.js?features=${
+  ['default'].join(',')
+}`
+
 const DefaultHeadMeta = props => (
   <div hidden>
     <Helmet
@@ -19,7 +23,7 @@ const DefaultHeadMeta = props => (
         },
       ]}
       script={[
-        { src: 'https://cdn.polyfill.io/v2/polyfill.min.js' },
+        { src: polyfill },
         ...props.scripts ? props.scripts : [],
       ]}
     />

@@ -33,23 +33,28 @@ export default (config = {}) => {
         {
           // phenomic requirement
           test: /\.(md|markdown)$/,
-          loader: phenomicLoader,
-          query: {
-            context: path.join(__dirname, config.source),
-            // see https://phenomic.io/docs/usage/plugins/
-            plugins: [
-              ...require('phenomic/lib/loader-preset-markdown').default,
-              // Custom loader for component embed via .md content files
-              require(path.join(__dirname, 'loaders', 'transform-embed-tags')),
-            ],
-          },
+          use: [
+            {
+              loader: phenomicLoader,
+              options: {
+                context: path.join(__dirname, config.source),
+                // see https://phenomic.io/docs/usage/plugins/
+                plugins: [
+                  ...require('phenomic/lib/loader-preset-markdown').default,
+                  // Custom loader for component embed via .md content files
+                  require(
+                    path.join(__dirname, 'loaders', 'transform-embed-tags')),
+                ],
+              },
+            },
+          ],
         },
 
         // *.json => like in node, return json
         // (not handled by webpack by default)
         {
           test: /\.json$/,
-          loader: 'json-loader',
+          use: [{ loader: 'json-loader' }],
         },
 
         // *.js => babel + eslint
@@ -59,9 +64,9 @@ export default (config = {}) => {
             path.resolve(__dirname, 'scripts'),
             path.resolve(__dirname, 'src'),
           ],
-          loaders: [
-            'babel-loader?cacheDirectory',
-            'eslint-loader' + (config.dev ? '?emitWarning' : ''),
+          use: [
+            { loader: 'babel-loader', options: { cacheDirectory: true } },
+            { loader: 'eslint-loader', options: { emitWarning: !!config.dev } },
           ],
         },
 
@@ -71,7 +76,7 @@ export default (config = {}) => {
           include: [
             path.resolve(__dirname, 'node_modules/react-icons'),
           ],
-          loaders: 'babel-loader',
+          use: [{ loader: 'babel-loader' }],
         },
 
         // ! \\
@@ -83,12 +88,12 @@ export default (config = {}) => {
           test: /\.css$/,
           exclude: /\.global\.css$/,
           include: path.resolve(__dirname, 'src'),
-          loader: ExtractTextPlugin.extract({
-            fallbackLoader: 'style-loader',
-            loader: [
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
               {
                 loader: 'css-loader',
-                query: {
+                options: {
                   modules: true,
                   localIdentName: (
                     config.production
@@ -97,9 +102,7 @@ export default (config = {}) => {
                   ),
                 },
               },
-              {
-                loader: 'postcss-loader',
-              },
+              { loader: 'postcss-loader' },
             ],
           }),
         },
@@ -108,27 +111,46 @@ export default (config = {}) => {
         {
           test: /\.global\.css$/,
           include: path.resolve(__dirname, 'src'),
-          loader: ExtractTextPlugin.extract({
-            fallbackLoader: 'style-loader',
-            loader: 'css-loader!postcss-loader',
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+              { loader: 'css-loader' },
+              { loader: 'postcss-loader' },
+            ],
+          }),
+        },
+
+        {
+          test: /\.css$/,
+          include: path.resolve(__dirname, 'node_modules'),
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+              { loader: 'css-loader' },
+              { loader: 'postcss-loader' },
+            ],
           }),
         },
 
         // copy assets and return generated path in js
         {
           test: /\.(html|ico|jpe?g|png|gif|eot|otf|webp|ttf|woff|woff2)$/,
-          loader: 'file-loader',
-          query: {
-            name: '[path][name].[hash].[ext]',
-            context: path.join(__dirname, config.source),
-          },
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[path][name].[hash].[ext]',
+                context: path.join(__dirname, config.source),
+              },
+            },
+          ],
         },
 
         // svg as raw string to be inlined
         {
           test: /\.svg$/,
           include: path.resolve(__dirname, 'src'),
-          loader: 'raw-loader',
+          use: [{ loader: 'raw-loader' }],
         },
       ],
     },
