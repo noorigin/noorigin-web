@@ -5,11 +5,8 @@
 }
 
 .contentContainer {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 2.4rem;
-  left: 0;
+  position: relative;
+  height: calc(100% - 2.4rem);
   padding: 1em;
   overflow: hidden;
   z-index: 1;

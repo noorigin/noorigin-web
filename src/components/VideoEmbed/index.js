@@ -1,18 +1,25 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import styles from './index.css'
 
-export default function VideoEmbed ({ from, id, theme }) {
-  const rootUrl = from === 'youtube' ? 'https://youtube.com/embed' : from
+export default class VideoEmbed extends Component {
+  shouldComponentUpdate() {
+    return false
+  }
 
-  return (
-    <div className={styles.videoEmbed}>
-      <iframe
-        className={styles.videoFrame}
-        src={`${rootUrl}/${id}?theme=${theme}`}
-        allowFullScreen
-      />
-    </div>
-  )
+  render() {
+    const { from, id, theme } = this.props
+    const rootUrl = from === 'youtube' ? 'https://youtube.com/embed' : from
+
+    return (
+      <div className={styles.videoEmbed}>
+        <iframe
+          className={styles.videoFrame}
+          src={`${rootUrl}/${id}?theme=${theme}`}
+          allowFullScreen
+        />
+      </div>
+    )
+  }
 }
 
 VideoEmbed.propTypes = {
