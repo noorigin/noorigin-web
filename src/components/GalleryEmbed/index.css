@@ -14,6 +14,7 @@
 :global(.ril-next-button),
 :global(.ril-prev-button) {
   background-color: transparent;
+  z-index: 4 !important;
 }
 
 :global(.ril-next-button),
@@ -35,4 +36,22 @@
 :global(.ril-zoom-in),
 :global(.ril-zoom-out) {
   display: none;
+}
+
+// ios 8 compat
+
+:global(.ril-image-next),
+:global(.ril-image-prev),
+:global(.ril-image-current) {
+  display: block;
+}
+
+:global(.ril-image-next),
+:global(.ril-image-prev) {
+  z-index: 0 !important;
+  opacity: 0 !important;
+}
+
+:global(.ril-image-current) {
+  z-index: 2 !important;
 }
