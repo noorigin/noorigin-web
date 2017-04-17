@@ -1,9 +1,27 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Children, cloneElement } from 'react'
 import { Link, BodyContainer } from 'phenomic'
 import VideoEmbed from '../VideoEmbed'
 import GalleryEmbed from '../GalleryEmbed'
 import CropImageEmbed from '../CropImageEmbed'
 import styles from './index.css'
+
+const createLinkWrap = (url, isFullPost) => {
+  const LinkWrap = ({ children }) => {
+    const child = Children.only(children)
+
+    if (isFullPost) return child
+
+    return (
+      <Link to={url} key={child.key} className={styles.htmlContent}>
+        {cloneElement(child, { key: 0 })}
+      </Link>
+    )
+  }
+
+  LinkWrap.propTypes = { children: PropTypes.node.isRequired }
+
+  return LinkWrap
+}
 
 export default function PostContent ({
   __url,
@@ -12,28 +30,34 @@ export default function PostContent ({
   body,
   isFullPost,
 }) {
+  const Wrap = createLinkWrap(__url, isFullPost)
+
   return (
     <article>
       <Link to={ __url } className={styles.title}>
         <h1>{ title }</h1>
       </Link>
       { bodyComponents && bodyComponents.length
-        ? bodyComponents.map(({ type, props }, index) => {
-          const embedProps = { ...props, isFullPost }
+        ? bodyComponents.map(({ type, props }, key) => {
+          const embedProps = { ...props, isFullPost, url: __url }
 
           switch (type) {
             case 'HTMLContent':
               return (
-                <div className={styles.htmlContent} key={index}>
-                  <BodyContainer>{props.content}</BodyContainer>
-                </div>
+                <Wrap key={key}>
+                  <BodyContainer key={key}>{props.content}</BodyContainer>
+                </Wrap>
               )
             case 'Video':
-              return <VideoEmbed {...{ ...embedProps, url: __url }} key={index} />
+              return <VideoEmbed {...embedProps} key={key} />
             case 'Gallery':
-              return <GalleryEmbed {...{ ...embedProps, url: __url }} key={index} />
+              return <GalleryEmbed {...embedProps} key={key} />
             case 'CropImage':
-              return <CropImageEmbed {...{ ...embedProps, url: __url }} key={index} />
+              return (
+                <Wrap key={key}>
+                  <CropImageEmbed {...embedProps} key={key} />
+                </Wrap>
+              )
             default: return ''
           }
         })
