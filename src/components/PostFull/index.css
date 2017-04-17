@@ -2,3 +2,22 @@
   max-width: 54rem;
   margin: 0 auto;
 }
+
+.backButton {
+  display: block;
+  border: none;
+  font: inherit;
+  background-color: transparent;
+  text-transform: uppercase;
+  text-align: inherit;
+  color: var(--colLink);
+  padding: 1em;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.backButtonLabel {
+  display: flex;
+  align-items: center;
+}
